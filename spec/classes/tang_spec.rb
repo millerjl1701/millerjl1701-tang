@@ -19,7 +19,7 @@ describe 'tang' do
 
           it { is_expected.to contain_package('tang').with_ensure('present') }
 
-          it { is_expected.to contain_service('tang').with(
+          it { is_expected.to contain_service('tangd.socket').with(
             'ensure'     => 'running',
             'enable'     => 'true',
             'hasstatus'  => 'true',
