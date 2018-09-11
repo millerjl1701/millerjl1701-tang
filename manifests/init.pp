@@ -3,18 +3,18 @@
 #
 # Main class that includes all other classes for the tang module.
 #
-# @param package_ensure Whether to install the tang package, and/or what version. Values: 'present', 'latest', or a specific version number. Default value: present.
-# @param package_name Specifies the name of the package to install. Default value: 'tang'.
-# @param service_enable Whether to enable the tang service at boot. Default value: true.
-# @param service_ensure Whether the tang service should be running. Default value: 'running'.
-# @param service_name Specifies the name of the service to manage. Default value: 'tang'.
+# @param package_ensure Whether to install the tang package, and/or what version. Values: 'present', 'latest', or a specific version number.
+# @param package_name Specifies the name of the package to install.
+# @param service_enable Whether to enable the tang service at boot.
+# @param service_ensure Whether the tang service should be running.
+# @param service_name Specifies the name of the service to manage.
 #
 class tang (
   String                     $package_ensure = 'present',
   String                     $package_name   = 'tang',
   Boolean                    $service_enable = true,
   Enum['running', 'stopped'] $service_ensure = 'running',
-  String                     $service_name   = 'tang',
+  String                     $service_name   = 'tangd.socket',
   ) {
   case $::operatingsystem {
     'RedHat', 'CentOS': {

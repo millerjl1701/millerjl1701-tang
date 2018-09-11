@@ -7,7 +7,6 @@ master branch: [![Build Status](https://secure.travis-ci.org/millerjl1701/miller
 1. [Module Description - What the module does and why it is useful](#module-description)
 1. [Setup - The basics of getting started with tang](#setup)
     * [What tang affects](#what-tang-affects)
-    * [Setup requirements](#setup-requirements)
     * [Beginning with tang](#beginning-with-tang)
 1. [Usage - Configuration options and additional functionality](#usage)
 1. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
@@ -16,31 +15,34 @@ master branch: [![Build Status](https://secure.travis-ci.org/millerjl1701/miller
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology the module integrates with and what that integration enables. This section should answer the questions: "What does this module *do*?" and "Why would I use it?"
+This module manages the installation and configuration of the TANG server service - the server side component of Network Bound Disk Encryption (NBDE).
 
-If your module has a range of functionality (installation, configuration, management, etc.) this is the time to mention it.
+Documentation concerning the TANG service on RHEL/CentOS systems may be found at:
+* https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-using_network-bound_disk_encryption
+* https://rhelblog.redhat.com/2018/04/13/an-easier-way-to-manage-disk-decryption-at-boot-with-red-hat-enterprise-linux-7-5-using-nbde/
+
+Note: NBDE was initilly released with RedHat/CentOS version 7.4 with complete support arriving with RedHat/CentOS 7.5.
 
 ## Setup
 
 ### What tang affects
 
-* A list of files, packages, services, or operations that the module will alter, impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled, etc.), mention it here.
+* Packages: tang (yum will also install jose and libjose as dependencies)
+* Service: tangd.socket
 
 ### Beginning with tang
 
-The very basic steps needed for a user to get the module up and running.
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you may wish to include an additional section here: Upgrading (For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+In order to install and configure the TANG server, all that is needed in a puppet code manifest is `include ::tang`.
 
 ## Usage
 
-Put the classes, types, and resources for customizing, configuring, and doing the fancy stuff with your module here.
+### Install a particular version of the TANG server service
+
+```puppet
+  class { 'tang':
+    package_ensure => '6-1.el7',
+  }
+```
 
 ## Reference
 
@@ -50,7 +52,9 @@ The puppet strings documentation is also included in the /docs folder.
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+For RedHat/CentOS systems, the TANG server service will only run on version 7.4 or higher. Attempting to use this class with lower versions will likely be problematic.
+
+The RedHat recommended HA configuration for the TANG server service is to deploy two or more TANG servers and register clients to both (all) servers. The alternative approach to HA is to share the TANG server keys between all the servers. While Puppet could allow for this, it will not be implemented at this time due to risk of key compromise.
 
 ## Development
 
