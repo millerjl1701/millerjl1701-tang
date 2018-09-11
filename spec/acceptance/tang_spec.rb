@@ -17,6 +17,14 @@ describe 'tang class' do
       it { should be_installed }
     end
 
+    describe package('jose') do
+      it { should be_installed }
+    end
+
+    describe package('libjose') do
+      it { should be_installed }
+    end
+
     describe service('tangd.socket') do
       it { should be_enabled }
       it { should be_running }
