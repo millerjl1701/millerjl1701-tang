@@ -17,7 +17,7 @@ class tang (
   String                     $service_name   = 'tangd.socket',
   ) {
   case $::operatingsystem {
-    'RedHat', 'CentOS': {
+    'RedHat', 'CentOS', 'AlmaLinux': {
       contain tang::install
       contain tang::config
       contain tang::service
