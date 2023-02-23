@@ -12,7 +12,7 @@ class tang::config (
     systemd::dropin_file { "Make Tang listen on poort ${listen_port}":
       filename => 'override.conf',
       unit     => $tang::service_name,
-      content  => "[Socket]\nListenStream=${listen_port}",
+      content  => "[Socket]\nListenStream=\nListenStream=${listen_port}",
     }
   }
 }
