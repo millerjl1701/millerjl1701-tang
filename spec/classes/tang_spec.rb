@@ -38,6 +38,7 @@ describe 'tang' do
         {
           osfamily: 'Solaris',
           operatingsystem: 'Nexenta',
+          os: { 'name' => 'Nexenta' },
         }
       end
 
