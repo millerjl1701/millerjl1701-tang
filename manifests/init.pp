@@ -15,9 +15,9 @@ class tang (
   Boolean                    $service_enable = true,
   Enum['running', 'stopped'] $service_ensure = 'running',
   String                     $service_name   = 'tangd.socket',
-  ) {
-  case $::operatingsystem {
-    'RedHat', 'CentOS': {
+) {
+  case $facts['os']['name'] {
+    'RedHat', 'CentOS', 'AlmaLinux': {
       contain tang::install
       contain tang::config
       contain tang::service
@@ -27,7 +27,7 @@ class tang (
       ~> Class['tang::service']
     }
     default: {
-      fail("${::operatingsystem} not supported")
+      fail("${facts['os']['name']} not supported")
     }
   }
 }
