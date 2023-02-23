@@ -8,7 +8,7 @@ describe 'tang' do
           facts
         end
 
-        context "tang class without any parameters changed from defaults" do
+        context 'tang class without any parameters changed from defaults' do
           it { is_expected.to compile.with_all_deps }
 
           it { is_expected.to contain_class('tang::install') }
@@ -19,12 +19,14 @@ describe 'tang' do
 
           it { is_expected.to contain_package('tang').with_ensure('present') }
 
-          it { is_expected.to contain_service('tangd.socket').with(
+          it {
+            is_expected.to contain_service('tangd.socket').with(
             'ensure'     => 'running',
             'enable'     => 'true',
             'hasstatus'  => 'true',
             'hasrestart' => 'true',
-          ) }
+          )
+          }
         end
       end
     end
@@ -34,12 +36,12 @@ describe 'tang' do
     describe 'tang class without any parameters on Solaris/Nexenta' do
       let(:facts) do
         {
-          :osfamily        => 'Solaris',
-          :operatingsystem => 'Nexenta',
+          osfamily: 'Solaris',
+          operatingsystem: 'Nexenta',
         }
       end
 
-      it { expect { is_expected.to contain_package('tang') }.to raise_error(Puppet::Error, /Nexenta not supported/) }
+      it { expect { is_expected.to contain_package('tang') }.to raise_error(Puppet::Error, %r{Nexenta not supported}) }
     end
   end
 end

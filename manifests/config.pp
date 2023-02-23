@@ -4,7 +4,7 @@
 #
 class tang::config (
   Optional[Integer[1,65536]] $listen_port = undef,
-){
+) {
   assert_private('tang::config is a private class')
   include tang
 
